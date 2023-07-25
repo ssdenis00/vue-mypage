@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useUiStore = defineStore('ui', () => {
-  const isLogged = ref(false)
+  const isLogged = ref(true)
   const user = ref({ name: '', email: '' })
 
   const changeIsLogged = (state) => {

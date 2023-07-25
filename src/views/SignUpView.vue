@@ -22,8 +22,8 @@ const onFinishForm = async (evt) => {
 
 <template>
   <ui-main>
-    <section class="signin">
-      <form class="custom-form" action="#" @submit.prevent="onFinishForm" name="signin-form">
+    <section class="signup">
+      <form class="custom-form" action="#" @submit.prevent="onFinishForm" name="signup-form">
         <input type="email" name="email" placeholder="Введите email" />
         <input type="text" name="name" placeholder="Введите имя" />
         <input type="password" name="password" placeholder="Введите пароль" />
@@ -35,7 +35,7 @@ const onFinishForm = async (evt) => {
 </template>
 
 <style scoped>
-.signin {
+.signup {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -43,11 +43,11 @@ const onFinishForm = async (evt) => {
   gap: 10px;
   height: 100%;
 }
-.signin h1 {
+.signup h1 {
   text-align: center;
 }
 
-.signin form {
+.signup form {
   display: flex;
   flex-direction: column;
   gap: 5px;

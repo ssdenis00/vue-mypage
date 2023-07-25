@@ -1,13 +1,8 @@
 <script setup>
 import UiMain from '../components/ui/UiMain.vue'
-import router from '../router'
 import { useUiStore } from '../stores/ui'
 
 const uiStore = useUiStore()
-
-if (!uiStore.$state.isLogged) {
-  router.push({ path: '/' })
-}
 </script>
 
 <template>
@@ -15,7 +10,7 @@ if (!uiStore.$state.isLogged) {
     <section class="feedback">
       <h1>Обратная связь</h1>
       <form class="custom-form" action="#">
-        <input type="email" name="email" value="test@mail.ru" disabled />
+        <input type="email" name="email" v-model="uiStore.$state.user.email" disabled />
         <textarea name="feedback-value" cols="30" rows="10"></textarea>
 
         <button type="submit">Отправить</button>

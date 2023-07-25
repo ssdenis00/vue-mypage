@@ -1,12 +1,30 @@
 <script setup>
 import UiMain from '../components/ui/UiMain.vue'
+import router from '../router'
+import { useApiStore } from '../stores/api.js'
+import { useUiStore } from '../stores/ui.js'
 
-const onFinishForm = (evt) => {
-  const elements = evt.target.elements
-  const emailValue = elements.email.value
-  const passwordValue = elements.password.value
+const apiStore = useApiStore()
+const uiStore = useUiStore()
 
-  console.log({ email: emailValue, password: passwordValue })
+const onFinishForm = async (evt) => {
+  try {
+    const elements = evt.target.elements
+    const email = elements.email.value
+    const password = elements.password.value
+
+    const responseLogin = await apiStore.login({ email, password })
+
+    apiStore.addJftToken(responseLogin.token)
+
+    const responseUser = await apiStore.getUser()
+
+    uiStore.changeIsLogged(true)
+    uiStore.changeUser({ name: responseUser.name, email: responseUser.email })
+    router.push('lesson')
+  } catch (error) {
+    console.log(error)
+  }
 }
 </script>
 

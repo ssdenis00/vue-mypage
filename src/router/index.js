@@ -1,14 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 import { useUiStore } from '../stores/ui'
-
-const redirectCustom = () => {
-  const uiStore = useUiStore()
-
-  if (!uiStore.$state.isLogged) {
-    return { path: '/' }
-  }
-}
+import HomeView from '../views/HomeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,9 +11,9 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/signin',
-      name: 'signin',
-      component: () => import('../views/SignInView.vue')
+      path: '/signup',
+      name: 'signup',
+      component: () => import('../views/SignUpView.vue')
     },
     {
       path: '/login',
@@ -31,22 +23,32 @@ const router = createRouter({
     {
       path: '/feedback',
       name: 'feedback',
-      redirect: redirectCustom,
       component: () => import('../views/FeedBackView.vue')
     },
     {
       path: '/lesson',
       name: 'lesson',
-      redirect: redirectCustom,
       component: () => import('../views/LessonView.vue')
     },
     {
       path: '/exercise',
       name: 'exercise',
-      redirect: redirectCustom,
       component: () => import('../views/ExerciseView.vue')
     }
   ]
+})
+
+router.beforeEach((to, _, next) => {
+  const uiStore = useUiStore()
+
+  if (
+    !uiStore.$state.isLogged &&
+    (to.name === 'feedback' || to.name === 'lesson' || to.name === 'exercise')
+  ) {
+    return next({ name: 'login' })
+  } else {
+    next()
+  }
 })
 
 export default router
